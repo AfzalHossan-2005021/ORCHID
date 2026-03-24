@@ -89,7 +89,7 @@ def pairwise_align_orchid(
     n_refinement_iter: int = 3,
     return_transform: bool = True,
     # ── FUGW solver settings ─────────────────────────────────────────────────
-    epsilon: float = 0.0,
+    epsilon: float = 0.01,
     max_iter: int = 100,
     tol: float = 1e-7,
     # ── Infrastructure ────────────────────────────────────────────────────────
@@ -167,7 +167,7 @@ def pairwise_align_orchid(
     return_transform : bool, default True
         Return the rigid transform (R, t) in addition to pi.
 
-    epsilon : float, default 0.0
+    epsilon : float, default 0.01
         Entropic regularisation for FUGW.  0 uses the MM solver (exact,
         recommended for datasets up to ~20 k cells).  Set to 0.01–0.1 for
         larger datasets (enables Sinkhorn, requires unbalanced_solver change).
@@ -440,7 +440,7 @@ def pairwise_align_orchid(
         reg_marginals=reg_marginals,
         epsilon=epsilon,
         divergence='kl',
-        unbalanced_solver='mm',
+        unbalanced_solver='sinkhorn',
         alpha=alpha_fugw,
         M=M_bio,
         init_pi=None,
